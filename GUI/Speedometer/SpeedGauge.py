@@ -13,7 +13,10 @@ class SpeedGauge:
 		self.set_image(self.frame)
 		#self.grw_flag = True
 		self.speed = "0"
-		self.font = pygame.font.Font('/home/pi/Gauge/Speedometer/digital-7.ttf', 60)
+		#RPi Font
+		#self.font = pygame.font.Font('/home/pi/Gauge/Speedometer/digital-7.ttf', 60)
+                #Windows Font
+		self.font = pygame.font.SysFont('DIGITAL-7.ttf', 60)
 		self.text = 0
 		self.textx = textx
 		self.texty = texty
