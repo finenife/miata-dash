@@ -1,4 +1,5 @@
 import pygame
+import socket
 from pygame.locals import *
 from gas.GasGauge import GasGauge
 from coolant.CoolGauge import CoolantGauge
@@ -7,6 +8,11 @@ from rpm.RpmGauge import RpmGauge
 from boost.BoostGauge import BoostGauge
 from Speedometer.SpeedGauge import SpeedGauge
 
+#setup listening port
+HOST = "localhost"
+PORT = 8000
+
+
 #setup pygame
 pygame.init()
 screen = pygame.display.set_mode((800, 480))
@@ -14,6 +20,7 @@ clock = pygame.time.Clock()
 pygame.mouse.set_visible(False)
 pygame.display.set_caption("Import Test")
 
+# This may get added to a config file and make this some generic disp server
 #fuel gauge
 gas = GasGauge(20, 247) #( 671, 247)
 
@@ -33,19 +40,29 @@ boost = BoostGauge(22, 60)
 spd = SpeedGauge(300, 185, 533, 222)
 
 #gui loop
-done = False
-while not done:
-        for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                        done = True
-        screen.fill((0, 0, 0))
-        rpm.show(screen)
-        gas.show(screen)
-        cool.show(screen)
-        bat.show(screen)
-        boost.show(screen)
-        spd.show(screen)
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind((HOST, PORT))
+    s.listen()
+    conn, addr = s.accept()
+    with conn:
+        print('Connected by', addr)
+        done = False
+        while not done:
+                data = conn.recv(128)
+                #if not data:
+                        #break
+                print(data)
+                for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                                done = True
+                screen.fill((0, 0, 0))
+                rpm.show(screen)
+                gas.show(screen)
+                cool.show(screen)
+                bat.show(screen)
+                boost.show(screen)
+                spd.show(screen)
 
-        pygame.display.flip()
+                pygame.display.flip()
 
-        clock.tick(30)
+                clock.tick(30)
