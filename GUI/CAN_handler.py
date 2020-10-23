@@ -30,10 +30,3 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             print("sent")
             data=""
 
-
-    '''for i in range(0,100):
-        #data = bytes(str(i), encoding='utf8')
-        # print(data)
-        #s.sendall(data)
-
-print('Received', repr(data))'''

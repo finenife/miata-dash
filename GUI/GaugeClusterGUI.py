@@ -62,12 +62,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         while not done:
                 conn.send(b"up")
                 packet = conn.recv(4096)
-                #data.append(packet)
-                #frames = pickle.loads(b"".join(data))
                 frames = pickle.loads(packet)
-                #if not data:
-                        #break
-                #print("Received:" + pickle.loads(data))
                 for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                                 done = True
@@ -81,4 +76,4 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
                 pygame.display.flip()
 
-                clock.tick(30)
+                clock.tick(60)
