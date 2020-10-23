@@ -1,17 +1,18 @@
 import socket
 import pickle
 import select
+import random
 
 HOST = 'localhost'  # Standard loopback interface address (localhost)
 PORT = 8000      # Port to listen on (non-privileged ports are > 1023)
 
 frames = {
     "fuel": 0,
-    "coolant": 0,
+    "cool": 0,
     "bat": 0,
     "rpm": 0,
-    "boost": 0,
-    "speed": 0
+    "bost": 0,
+    "sped": 0
     }
 data = ""
 
@@ -29,4 +30,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.send(pickle.dumps(frames))
             print("sent")
             data=""
-
+        frames["fuel"]= random.randrange(0, 15)
+        frames["cool"]= random.randrange(0, 15)
+        frames["bat"]= random.randrange(0, 15)
+        frames["rpm"]= random.randrange(0, 61)
+        frames["bost"]= random.randrange(0, 15)
+        frames["sped"]= random.randrange(0, 150)

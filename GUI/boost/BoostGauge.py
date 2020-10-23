@@ -32,11 +32,11 @@ class BoostGauge:
 
 	def show(self, screen):
 		screen.blit(self.get_image(), self.get_pos())
-		if self.get_frame() == 15:
+		'''if self.get_frame() == 15:
 			self.grw_flag = False
 		if self.get_frame() == 0:
 			self.grw_flag = True
 		if self.grw_flag:
 			self.set_frame(self.get_frame() + 1)
 		else:
-			self.set_frame(self.get_frame() - 1)
+			self.set_frame(self.get_frame() - 1)'''

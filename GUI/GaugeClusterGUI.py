@@ -43,11 +43,11 @@ spd = SpeedGauge(300, 185, 533, 222)
 #default frames dictionary
 frames = {
     "fuel": 0,
-    "coolant": 0,
+    "cool": 0,
     "bat": 0,
     "rpm": 0,
-    "boost": 0,
-    "speed": 0
+    "bost": 0,
+    "sped": 0
     }
 
 #gui loop
@@ -67,11 +67,17 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         if event.type == pygame.QUIT:
                                 done = True
                 screen.fill((0, 0, 0))
+                rpm.set_frame(frames["rpm"])
                 rpm.show(screen)
+                gas.set_frame(frames["fuel"])
                 gas.show(screen)
+                cool.set_frame(frames["cool"])
                 cool.show(screen)
+                bat.set_frame(frames["bat"])
                 bat.show(screen)
+                boost.set_frame(frames["bost"])
                 boost.show(screen)
+                spd.set_speed(frames["sped"])
                 spd.show(screen)
 
                 pygame.display.flip()
