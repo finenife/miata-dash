@@ -1,5 +1,7 @@
 import pygame
 import socket
+import pickle
+import select
 from pygame.locals import *
 from gas.GasGauge import GasGauge
 from coolant.CoolGauge import CoolantGauge
@@ -11,7 +13,6 @@ from Speedometer.SpeedGauge import SpeedGauge
 #setup listening port
 HOST = "localhost"
 PORT = 8000
-
 
 #setup pygame
 pygame.init()
@@ -39,19 +40,34 @@ boost = BoostGauge(22, 60)
 #SPEEDOMETER
 spd = SpeedGauge(300, 185, 533, 222)
 
+#default frames dictionary
+frames = {
+    "fuel": 0,
+    "coolant": 0,
+    "bat": 0,
+    "rpm": 0,
+    "boost": 0,
+    "speed": 0
+    }
+
 #gui loop
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
     conn, addr = s.accept()
     with conn:
+        #conn.setblocking(0)
         print('Connected by', addr)
         done = False
         while not done:
-                data = conn.recv(128)
+                conn.send(b"up")
+                packet = conn.recv(4096)
+                #data.append(packet)
+                #frames = pickle.loads(b"".join(data))
+                frames = pickle.loads(packet)
                 #if not data:
                         #break
-                print(data)
+                #print("Received:" + pickle.loads(data))
                 for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                                 done = True
