@@ -54,12 +54,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             data=""
         for msg in bus:
             if hex(msg.arbitration_id) in ID
-                ID[hex(msg.arbitration_id)](msg.data)
-
-                
+                ID[hex(msg.arbitration_id)](msg.data)                
         frames["fuel"]= random.randrange(0, 15)
-        frames["cool"]= random.randrange(0, 15)
-        frames["bat"]= random.randrange(0, 15)
-        frames["rpm"]= random.randrange(0, 61)
-        frames["bost"]= random.randrange(0, 15)
         frames["sped"]= random.randrange(0, 150)
