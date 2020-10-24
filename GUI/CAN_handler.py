@@ -9,16 +9,16 @@ from time import sleep
 
 def Arb360(data):
     #can data field is byte-array
-    frames["rpm"]=61-min(61,math.floor(struct.unpack_from("H", data, 0)[0]/147.54)) # determines RPM png
-    frames["bost"]=min(15,math.floor(struct.unpack_from("H", data, 2)[0]*0.0145)) # determines boost png
+    frames["rpm"]=61-min(61,math.floor(struct.unpack_from("H", data, 0)[0]*(61/9000))) # determines RPM png max rpm 9000
+    frames["bost"]=min(15,math.floor(struct.unpack_from("H", data, 2)[0]*0.0145)) # determines boost png max boost 15
 
 def Arb372(data):
     #can data field is byte-array
-    frames["bat"]=(min(20,math.floor(struct.unpack_from("H", data, 2)[0]*0.1)))/15 # determines boost png
+    frames["bat"]=min(20,math.floor(struct.unpack_from("H", data, 2)[0]*(1.5/20))) # determines boost png max bat 20V
 
 def Arb3E0(data):
     #can data field is byte-array
-    frames["cool"]=math.floor(max(0,min(300,math.floor((((struct.unpack_from("H", data, 0)[0]*0.1)-273.15)*1.8)+32)))*(15/300)) # determines boost png
+    frames["cool"]=math.floor(max(0,min(300,math.floor((((struct.unpack_from("H", data, 0)[0]*0.1)-273.15)*1.8)+32)))*(15/300)) # determines boost png max cool 300
 
 
 HOST = 'localhost'  # Standard loopback interface address (localhost)
