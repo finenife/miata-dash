@@ -2,6 +2,7 @@ import pygame
 import socket
 import pickle
 import select
+import subprocess
 
 from pygame.locals import *
 from gas.GasGauge import GasGauge
@@ -44,6 +45,7 @@ frames = {
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     print("listening")
     s.bind((HOST, PORT))
+    subprocess.Popen(["python", "/home/pi/miata-dash/GUI/CAN_handler.py"])
     s.listen()
     conn, addr = s.accept()
     with conn:
