@@ -5,8 +5,12 @@ import random
 import can
 import math
 import struct
-
 from time import sleep
+
+def Arb360(data):
+    #can data field is byte-array
+    frames["rpm"]=61-min(61,math.floor(struct.unpack_from("H", data, 0)[0]/61)) # determines RPM png
+    frames["bost"]=min(15,math.floor(struct.unpack_from("H", data, 2)[0]*0.0145)) # determines boost png
 
 HOST = 'localhost'  # Standard loopback interface address (localhost)
 PORT = 8000      # Port to listen on (non-privileged ports are > 1023)
@@ -42,7 +46,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             #print("sent")
             data=""
         for msg in bus:
-            if msg.arbitration_id in ID
+            if hex(msg.arbitration_id) in ID
         frames["fuel"]= random.randrange(0, 15)
         frames["cool"]= random.randrange(0, 15)
         frames["bat"]= random.randrange(0, 15)
