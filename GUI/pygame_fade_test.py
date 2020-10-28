@@ -4,6 +4,7 @@ import socket
 from icons import *
 from errors import *
 import math
+import pickle
 from gas.GasGauge import GasGauge
 from coolant.CoolGauge import CoolantGauge
 from battery.VBatGauge import VbatGauge
@@ -253,7 +254,6 @@ def main():
     bat.show(screen)
     boost.show(screen)
     spd.show(screen)
-    #intSer.show(screen)
     pygame.display.update()
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         print("listening")
@@ -268,15 +268,16 @@ def main():
             return
         with conn:
             commLight.hide(screen)
+            pygame.display.update()
             print('Connected by', addr)
             done = False
             while not done:
-                conn.send(b"up")
-                packet = conn.recv(4096)
-                frames = pickle.loads(packet)
                 for event in pygame.event.get():
                         if event.type == pygame.K_c and pygame.key.get_mods() & pygame.KMOD_CTRL:
                                 done = True
+                conn.send(b"up")
+                packet = conn.recv(4096)
+                frames = pickle.loads(packet)
                 screen.fill((0, 0, 0))
                 rpm.set_frame(frames["rpm"])
                 rpm.show(screen)
@@ -290,9 +291,7 @@ def main():
                 boost.show(screen)
                 spd.set_speed(frames["sped"])
                 spd.show(screen)
-
                 pygame.display.flip()
-
                 clock.tick(60)
              
 if __name__ == '__main__':
