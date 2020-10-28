@@ -9,7 +9,7 @@ class RpmGauge:
 		self.posx = posx
 		self.posy = posy
 		self.image = 0
-		self.frame = 0
+		self.frame = 61
 		self.set_image(self.frame)
 		self.grw_flag = True
 
